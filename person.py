@@ -37,7 +37,6 @@ class Person(object):
             self.is_vaccinated = True
             self.infecttion = False
             return survived
-        pass
 
 
 ''' These are simple tests to ensure that you are instantiating your Person class correctly. '''
@@ -55,6 +54,12 @@ def test_not_vacc_person_instantiation():
     # TODO: complete your own assert statements that test
     # the values at each attribute
     # assert ...
+    assert person._id == 2
+    assert person.is_vaccinated == False
+    assert person.is_vaccinated is False
+    # assert person.is_vaccinated is True
+    # assert person.infection is True
+    assert person.infection is None
     pass
 
 
@@ -76,7 +81,8 @@ def test_did_survive_infection():
     # TODO: Create a Virus object to give a Person object an infection
     virus = Virus("Dysentery", 0.7, 0.2)
     # TODO: Create a Person object and give them the virus infection
-    person = Person(4, False, virus)
+    # person = Person(4, False, virus)
+    person = Person(4, True, virus)
 
     # Resolve whether the Person survives the infection or not
     survived = person.did_survive_infection()
@@ -86,12 +92,13 @@ def test_did_survive_infection():
         # TODO: Write your own assert statements that test
         # the values of each attribute for a Person who survived
         # assert ...
+        assert person._id == 4
+        assert person.is_vaccinated == True
     else:
         assert person.is_alive is False
         # TODO: Write your own assert statements that test
         # the values of each attribute for a Person who did not survive
         # assert ...
+        assert person._id == 4
+        assert person.is_vaccinated == False
         pass
-test_vacc_person_instantiation()
-test_sick_person_instantiation()
-test_did_survive_infection()
