@@ -60,15 +60,33 @@ class Simulation(object):
                 list: A list of Person objects.
 
         '''
+        pop_created = []
         # TODO: Finish this method!  This method should be called when the simulation
         # begins, to create the population that will be used. This method should return
         # an array filled with Person objects that matches the specifications of the
         # simulation (correct number of people in the population, correct percentage of
         # people vaccinated, correct number of initially infected people).
+        total_to_vaccinate = int(round(self.vacc_percentage * float(self.pop_size)))
+        # total_to_infect = self.initial_infected
+        # total_to_vaccinate = self.vacc_percentage * float(self.pop_size)
 
+        #CREATEs the population
+        for _id_num in range(0,self.pop_size):
+            rand_vaccinate = random.randint(0,1)
+            if rand_vaccinate == 1 and total_to_vaccinate != 0:
+                new_person = Person(_id_num, True, None)
+                total_to_vaccinate = total_to_vaccinate - 1
+            else:
+                new_person = Person(_id_num, False, None)
+            pop_created.append(new_person)
+
+        for to_infect in range(0, initial_infected):
+            random_person = random.randint(0,len(pop_created))
+            if pop_created[random_person].is_vaccinated == False:
+                pop_created[random_person].infection = self.virus
         # Use the attributes created in the init method to create a population that has
         # the correct intial vaccination percentage and initial infected.
-        pass
+        return pop_created
 
     def _simulation_should_continue(self):
         ''' The simulation should only end if the entire population is dead
@@ -78,7 +96,7 @@ class Simulation(object):
                 bool: True for simulation should continue, False if it should end.
         '''
         # TODO: Complete this helper method.  Returns a Boolean.
-        
+
         pass
 
     def run(self):
