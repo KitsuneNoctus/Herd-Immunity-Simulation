@@ -31,8 +31,10 @@ class Simulation(object):
         '''
         # TODO: Create a Logger object and bind it to self.logger.
         # Remember to call the appropriate logger method in the corresponding parts of the simulation.
+        Infection_log = Logger("Infection_log")
         # TODO: Call self._create_population() and pass in the correct parameters.
         # Store the array that this method will return in the self.population attribute.
+
         # TODO: Store each newly infected person's ID in newly_infected attribute.
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
@@ -124,18 +126,17 @@ class Simulation(object):
         # HINT: You may want to call the logger's log_time_step() method at the end of each time step.
         # TODO: Set this variable using a helper
         time_step_counter = 0
-        should_continue = _simulation_should_continue()
+        should_continue = self._simulation_should_continue()
 
         while should_continue:
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
-        self.time_step()
-        time_step_counter += 1
-        should_continue = _simulation_should_continue()
-            pass
+            self.time_step()
+            time_step_counter += 1
+            should_continue = self._simulation_should_continue()
 
-        print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
-        pass
+        print(f'The simulation has ended after {time_step_counter} turns.')
+
 
     def time_step(self):
         ''' This method should contain all the logic for computing one time step
@@ -161,6 +162,9 @@ class Simulation(object):
                     if random_person.is_alive == True:
                         self.interaction(person, random_person)
                         interctions += 1
+
+        self._infect_newly_infected()
+        self.newly_infected.clear()
 
 
 
@@ -191,11 +195,18 @@ class Simulation(object):
             #     Simulation object's newly_infected array, so that their .infected
             #     attribute can be changed to True at the end of the time step.
         # TODO: Call s logger method during this method.
-        if random_person.is_vaccinated == False and random_person.infection == None:
+        did_infect = False
+        if random_person.is_vaccinated == False and random_person.infection == None and random_person.is_alive == True:
             rand_infect = random.uniform(0,1)
+            if rand_infect < self.virus.repro_rate:
+                self.newly_infected.append(random_person._id)
+                did_infect = True
 
 
-        pass
+        Infection_log.log_interaction(self, person, random_person, None, None, did_infect)
+
+
+
 
     def _infect_newly_infected(self):
         ''' This method should iterate through the list of ._id stored in self.newly_infected
@@ -203,10 +214,13 @@ class Simulation(object):
         # TODO: Call this method at the end of every time step and infect each Person.
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
+        for person in self.newly_infected:
+            person.infection = self.virus
         pass
 
 
 if __name__ == "__main__":
+    # python3 simulation.py ebola .8 .2 100000 .5
     params = sys.argv[1:]
     virus_name = str(params[0])
     repro_num = float(params[1])
@@ -220,7 +234,7 @@ if __name__ == "__main__":
     else:
         initial_infected = 1
 
-    virus = Virus(name, repro_rate, mortality_rate)
-    sim = Simulation(pop_size, vacc_percentage, initial_infected, virus)
+    virus = Virus(virus_name, repro_num, mortality_rate)
+    sim = Simulation(pop_size, vacc_percentage, virus, initial_infected)
 
     sim.run()
