@@ -129,7 +129,9 @@ class Simulation(object):
         while should_continue:
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
-            print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
+            pass
+
+        print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
         pass
 
     def time_step(self):
@@ -144,6 +146,8 @@ class Simulation(object):
             3. Otherwise call simulation.interaction(person, random_person) and
                 increment interaction counter by 1.
             '''
+
+        interactions = 100
         # TODO: Finish this method.
         pass
 
