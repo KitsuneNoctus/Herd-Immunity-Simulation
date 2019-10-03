@@ -13,7 +13,7 @@ class Simulation(object):
     population that are vaccinated, the size of the population, and the amount of initially
     infected people in a population are all variables that can be set when the program is run.
     '''
-    def __init__(self, pop_size, vacc_percentage, initial_infected=1, virus):
+    def __init__(self, pop_size, vacc_percentage, virus, initial_infected=1):
         ''' Logger object logger records all events during the simulation.
         Population represents all Persons in the population.
         The next_person_id is the next available id for all created Persons,
@@ -46,6 +46,7 @@ class Simulation(object):
         self.current_infected = 0 # Int
         self.vacc_percentage = vacc_percentage # float between 0 and 1
         self.total_dead = 0 # Int
+        #Comment out this line when testing before stuff
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(virus_name, population_size, vacc_percentage, initial_infected)
         self.newly_infected = []
 
@@ -124,7 +125,7 @@ class Simulation(object):
         while should_continue:
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
-        print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
+            print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
         pass
 
     def time_step(self):
