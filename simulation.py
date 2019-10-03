@@ -48,7 +48,6 @@ class Simulation(object):
         self.current_infected = 0 # Int
         self.vacc_percentage = vacc_percentage # float between 0 and 1
         self.total_dead = 0 # Int
-        #Comment out this line when testing before stuff
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(virus.name, pop_size, vacc_percentage, initial_infected)
         self.newly_infected = []
 
@@ -104,13 +103,20 @@ class Simulation(object):
         '''
         # TODO: Complete this helper method.  Returns a Boolean.
         count_alive = 0
+        count_vaccinated = 0
 
         for person in self.population:
             # print(person.is_alive)
             if person.is_alive == True:
                 count_alive += 1
 
+            if person.is_vaccinated == True:
+                count_vaccinated += 1
+
+
         if count_alive == 0:
+            return False
+        elif count_alive == count_vaccinated:
             return False
         else:
             return True
@@ -165,6 +171,7 @@ class Simulation(object):
                         self.interaction(person, random_person)
                         interactions += 1
 
+        self._who_dies()
         self._infect_newly_infected()
         self.newly_infected.clear()
 
@@ -216,8 +223,23 @@ class Simulation(object):
         # TODO: Call this method at the end of every time step and infect each Person.
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
-        for person in self.newly_infected:
-            person.infection = self.virus
+        for person_id in self.newly_infected:
+            for person in self.population:
+                if person_id == person._id:
+                    person.infection = self.virus
+        pass
+
+    def _who_dies(self):
+        """Checks who dies from the infection"""
+        for person in self.population:
+            if person.infection == self.virus:
+                lived = person.did_survive_infection()
+                if lived == True:
+                    person.infection = None
+                    person.is_vaccinated = True
+                else:
+                    person.is_alive = False
+                    self.total_dead += 1
         pass
 
 

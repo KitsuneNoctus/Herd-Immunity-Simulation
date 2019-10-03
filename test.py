@@ -41,6 +41,9 @@ def test_simulation_should_continue():
     some_survive = test._simulation_should_continue()
     assert some_survive == True
 
+def test_who_dies():
+    pass
+
 def test_simulation():
     virus = Virus("Ebola", 0.3, 0.4)
     sim = Simulation(50, 0.7, virus, 5)
