@@ -20,3 +20,11 @@ def test_log_interaction():
     random_person = Person(1, False, None)
 
     log.log_interaction(person, random_person, True, False, True)
+
+def test_log_infection_survival():
+    file_name = 'log.txt'
+    log = Logger(file_name)
+
+    person = Person(5, True, None)
+
+    log.log_infection_survival(person, True)
