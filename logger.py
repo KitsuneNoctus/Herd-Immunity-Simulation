@@ -2,7 +2,7 @@ from person import Person
 
 
 
-lass Logger(object):
+class Logger(object):
     ''' Utility class responsible for logging all interactions during the simulation. '''
     # TODO: Write a test suite for this class to make sure each method is working
     # as expected.
@@ -14,6 +14,8 @@ lass Logger(object):
         # TODO:  Finish this initialization method. The file_name passed should be the
         # full file name of the file that the logs will be written to.
         self.file_name = file_name
+
+
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
                        basic_repro_num):
@@ -50,8 +52,16 @@ lass Logger(object):
             file.write('Interaction Logs: \n')
 
             if did_infect:
-                status = f'{person.id} infects {random_person.id} /n'
+                status = f'{person._id} infects {random_person._id} /n'
                 file.write(status)
+
+            elif person.is_vaccinated:
+                status = f'{person._id} did not infect {random_person._id} /n'
+                f.write(status)
+
+            else:
+                status = f'{person._id} did not infect {random_person._id} because {random_person._id} is already sick or vaccinated'
+                f.write(status)
 
 
 
