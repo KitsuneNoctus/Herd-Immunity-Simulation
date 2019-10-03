@@ -2,6 +2,7 @@
 from logger import Logger
 from simulation import Simulation
 from virus import Virus
+from person import Person
 
 def test_create_population():
     virus = Virus("Small Cough",0.1,0.3)
@@ -23,3 +24,20 @@ def test_create_population():
 
     assert count_infected == 2
     assert count_vaccinated == 5
+
+def test_simulation_should_continue():
+    virus = Virus("Small Cough",0.1,0.3)
+    subject_1 = Person(0,False,None)
+    subject_1.is_alive = False
+    subject_2 = Person(1,False,None)
+    subject_2.is_alive = True
+    subject_3 = Person(2,False,None)
+    subject_3.is_alive = False
+
+    test = Simulation(3,0,virus,0)
+    test.population.append(subject_1)
+    test.population.append(subject_2)
+    test.population.append(subject_3)
+    some_survive = test._simulation_should_continue()
+    assert some_survive == True
+    pass

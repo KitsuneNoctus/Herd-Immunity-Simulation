@@ -75,6 +75,7 @@ class Simulation(object):
             new_person = Person(_id, False, None)
             pop_created.append(new_person)
 
+        #Vaccinates a number of the population
         for to_vaccinate in pop_created:
             #print(int(round(len(pop_created)*self.vacc_percentage)))
             random_person = random.randint(0,len(pop_created)-1)
@@ -82,6 +83,7 @@ class Simulation(object):
                 pop_created[random_person].is_vaccinated = True
                 total_to_vaccinate = total_to_vaccinate - 1
 
+        #Infects a set amount of un vaccinated population
         for to_infect in pop_created:
             random_person = random.randint(0,len(pop_created)-1)
             if pop_created[random_person].is_vaccinated == False and total_to_infect != 0:
@@ -99,17 +101,16 @@ class Simulation(object):
                 bool: True for simulation should continue, False if it should end.
         '''
         # TODO: Complete this helper method.  Returns a Boolean.
-        some_alive = True
         count_alive = 0
+
         for person in self.population:
             if person.is_alive == True:
                 count_alive += 1
-
         if count_alive == 0:
-            some_alive = False
+            return False
         else:
-            some_alive = True
-        return some_alive
+            return True
+
 
     def run(self):
         ''' This method should run the simulation until all requirements for ending
