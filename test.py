@@ -8,4 +8,9 @@ def test_create_population():
     group = Simulation(10,0.5,virus,2)
     pop = group._create_population(2)
     assert len(pop) == 10
-    pass
+    count_infected = 0
+    for person in pop:
+        if person.infection == virus:
+            count_infected += 1
+            assert person.infection == virus
+    assert count_infected == 2
