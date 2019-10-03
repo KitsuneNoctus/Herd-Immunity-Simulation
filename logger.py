@@ -57,11 +57,11 @@ class Logger(object):
 
             elif person.is_vaccinated:
                 status = f'{person._id} did not infect {random_person._id} /n'
-                f.write(status)
+                file.write(status)
 
             else:
                 status = f'{person._id} did not infect {random_person._id} because {random_person._id} is already sick or vaccinated'
-                f.write(status)
+                file.write(status)
 
 
 

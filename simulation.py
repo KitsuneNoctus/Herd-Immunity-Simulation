@@ -38,7 +38,7 @@ class Simulation(object):
         # TODO: Store each newly infected person's ID in newly_infected attribute.
         # At the end of each time step, call self._infect_newly_infected()
         # and then reset .newly_infected back to an empty list.
-        self.logger = None
+        self.logger = Infection_log
         self.population = [] # List of Person objects
         self.pop_size = pop_size # Int
         self.next_person_id = 0 # Int
@@ -106,8 +106,10 @@ class Simulation(object):
         count_alive = 0
 
         for person in self.population:
+            # print(person.is_alive)
             if person.is_alive == True:
                 count_alive += 1
+
         if count_alive == 0:
             return False
         else:
@@ -125,9 +127,9 @@ class Simulation(object):
         # TODO: Keep track of the number of time steps that have passed.
         # HINT: You may want to call the logger's log_time_step() method at the end of each time step.
         # TODO: Set this variable using a helper
+        self.population = self._create_population(self.initial_infected)
         time_step_counter = 0
         should_continue = self._simulation_should_continue()
-
         while should_continue:
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
@@ -157,11 +159,11 @@ class Simulation(object):
         for person in self.population:
             if person.is_alive == True and person.infection == self.virus:
                 interactions = 0
-                while interctions != 100:
+                while interactions != 100:
                     random_person = random.choice(self.population)
                     if random_person.is_alive == True:
                         self.interaction(person, random_person)
-                        interctions += 1
+                        interactions += 1
 
         self._infect_newly_infected()
         self.newly_infected.clear()
@@ -203,7 +205,7 @@ class Simulation(object):
                 did_infect = True
 
 
-        Infection_log.log_interaction(self, person, random_person, None, None, did_infect)
+        self.logger.log_interaction(person, random_person, None, None, did_infect)
 
 
 
@@ -222,12 +224,14 @@ class Simulation(object):
 if __name__ == "__main__":
     # python3 simulation.py ebola .8 .2 100000 .5
     params = sys.argv[1:]
+
     virus_name = str(params[0])
     repro_num = float(params[1])
     mortality_rate = float(params[2])
-
     pop_size = int(params[3])
     vacc_percentage = float(params[4])
+
+    # print(len(params))
 
     if len(params) == 6:
         initial_infected = int(params[5])
