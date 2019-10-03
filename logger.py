@@ -1,4 +1,8 @@
-class Logger(object):
+from person import Person
+
+
+
+lass Logger(object):
     ''' Utility class responsible for logging all interactions during the simulation. '''
     # TODO: Write a test suite for this class to make sure each method is working
     # as expected.
@@ -9,7 +13,7 @@ class Logger(object):
     def __init__(self, file_name):
         # TODO:  Finish this initialization method. The file_name passed should be the
         # full file name of the file that the logs will be written to.
-        self.file_name = None
+        self.file_name = file_name
 
     def write_metadata(self, pop_size, vacc_percentage, virus_name, mortality_rate,
                        basic_repro_num):
@@ -23,7 +27,9 @@ class Logger(object):
         # the 'a' mode to append a new log to the end, since 'w' overwrites the file.
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
-        pass
+        with open(self.file_name, mode = 'w') as file:
+            metadata = f'Population Size: {pop_size}  Vaccination Percentage: {vacc_percentage}  Virus Name: {virus_name}  Mortality Rate: {mortality_rate}  Basic Reproduction Number: {basic_repro_num} /n'
+            file.write(metadata)
 
     def log_interaction(self, person, random_person, random_person_sick=None,
                         random_person_vacc=None, did_infect=None):
@@ -40,7 +46,14 @@ class Logger(object):
         # represent all the possible edge cases. Use the values passed along with each person,
         # along with whether they are sick or vaccinated when they interact to determine
         # exactly what happened in the interaction and create a String, and write to your logfile.
-        pass
+        with open(self.file_name, mode = 'a') as file:
+            file.write('Interaction Logs: \n')
+
+            if did_infect:
+                status = f'{person.id} infects {random_person.id} /n'
+                file.write(status)
+
+
 
     def log_infection_survival(self, person, did_die_from_infection):
         ''' The Simulation object uses this method to log the results of every
