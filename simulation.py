@@ -129,6 +129,9 @@ class Simulation(object):
         while should_continue:
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
+        self.time_step()
+        time_step_counter += 1
+        should_continue = _simulation_should_continue()
             pass
 
         print('The simulation has ended after {time_step_counter} turns.'.format(time_step_counter))
@@ -147,8 +150,20 @@ class Simulation(object):
                 increment interaction counter by 1.
             '''
 
-        interactions = 100
         # TODO: Finish this method.
+
+
+        for person in self.population:
+            if person.is_alive == True and person.infection == self.virus:
+                interactions = 0
+                while interctions != 100:
+                    random_person = random.choice(self.population)
+                    if random_person.is_alive == True:
+                        self.interaction(person, random_person)
+                        interctions += 1
+
+
+
         pass
 
     def interaction(self, person, random_person):
@@ -175,7 +190,11 @@ class Simulation(object):
             #     than repro_rate, random_person's ID should be appended to
             #     Simulation object's newly_infected array, so that their .infected
             #     attribute can be changed to True at the end of the time step.
-        # TODO: Call slogger method during this method.
+        # TODO: Call s logger method during this method.
+        if random_person.is_vaccinated == False and random_person.infection == None:
+            rand_infect = random.uniform(0,1)
+
+
         pass
 
     def _infect_newly_infected(self):
