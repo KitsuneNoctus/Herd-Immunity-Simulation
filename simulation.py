@@ -67,23 +67,26 @@ class Simulation(object):
         # simulation (correct number of people in the population, correct percentage of
         # people vaccinated, correct number of initially infected people).
         total_to_vaccinate = int(round(self.vacc_percentage * float(self.pop_size)))
-        # total_to_infect = self.initial_infected
+        total_to_infect = self.initial_infected
         # total_to_vaccinate = self.vacc_percentage * float(self.pop_size)
 
         #CREATEs the population
-        for _id_num in range(0,self.pop_size):
-            rand_vaccinate = random.randint(0,1)
-            if rand_vaccinate == 1 and total_to_vaccinate != 0:
-                new_person = Person(_id_num, True, None)
-                total_to_vaccinate = total_to_vaccinate - 1
-            else:
-                new_person = Person(_id_num, False, None)
+        for _id in range(0,self.pop_size):
+            new_person = Person(_id, False, None)
             pop_created.append(new_person)
 
-        for to_infect in range(0, initial_infected):
-            random_person = random.randint(0,len(pop_created))
-            if pop_created[random_person].is_vaccinated == False:
+        for to_vaccinate in pop_created:
+            #print(int(round(len(pop_created)*self.vacc_percentage)))
+            random_person = random.randint(0,len(pop_created)-1)
+            if pop_created[random_person].is_vaccinated == False and total_to_vaccinate != 0:
+                pop_created[random_person].is_vaccinated = True
+                total_to_vaccinate = total_to_vaccinate - 1
+
+        for to_infect in pop_created:
+            random_person = random.randint(0,len(pop_created)-1)
+            if pop_created[random_person].is_vaccinated == False and total_to_infect != 0:
                 pop_created[random_person].infection = self.virus
+                total_to_infect -= 1
         # Use the attributes created in the init method to create a population that has
         # the correct intial vaccination percentage and initial infected.
         return pop_created
