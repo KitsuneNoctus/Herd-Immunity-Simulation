@@ -115,10 +115,13 @@ class Simulation(object):
 
 
         if count_alive == 0:
+            print("All dead")
             return False
         elif count_alive == count_vaccinated:
+            print("All alive and vacinated")
             return False
         else:
+            print("Working")
             return True
 
 
@@ -136,6 +139,7 @@ class Simulation(object):
         self.population = self._create_population(self.initial_infected)
         time_step_counter = 0
         should_continue = self._simulation_should_continue()
+
         while should_continue:
         # TODO: for every iteration of this loop, call self.time_step() to compute another
         # round of this simulation.
@@ -238,6 +242,7 @@ class Simulation(object):
                     person.infection = None
                     person.is_vaccinated = True
                 else:
+                    person.infection = None
                     person.is_alive = False
                     self.total_dead += 1
         pass
