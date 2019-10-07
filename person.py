@@ -73,6 +73,16 @@ def test_sick_person_instantiation():
     assert person.infection == virus
     pass
 
+def test_sick_person_instantiate():
+
+    virus = Virus("Polio", .4, .22 )
+
+    person = Person(6, True, virus)
+
+    assert person._id == 6
+    assert person.is_vaccinated == True
+    assert person.infection == virus
+
 
 def test_did_survive_infection():
     # TODO: Create a Virus object to give a Person object an infection
@@ -99,3 +109,33 @@ def test_did_survive_infection():
         assert person._id == 4
         assert person.is_vaccinated == False
         pass
+
+def test_did_survive_infection_2():
+    virus = Virus('E. Coli', .8, .05)
+
+    person = Person(2, False, virus)
+
+    survived = person.did_survive_infection()
+    if survived:
+        assert person.is_alive is True
+        assert peron._id == 2
+        assert person.is_vaccinated == True
+    else:
+        assert person.is_alive is False
+        assert person._id == 2
+        assert person.is_vaccinated == False
+
+def test_did_survive_infection_3():
+    virus = Virus('Syphilis', .6, .32)
+
+    person = Person(5, False, virus)
+
+    survived = person.did_survive_infection()
+    if survived:
+        assert person.is_alive is True
+        assert person._id == 5
+        assert perosn.is_vaccinated == True
+    else:
+        assert person.is_alive is False
+        assert person._id == 5
+        assert person.is_vaccinated == False
