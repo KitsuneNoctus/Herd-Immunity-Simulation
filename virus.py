@@ -14,3 +14,15 @@ def test_virus_instantiation():
     assert virus.name == "HIV"
     assert virus.repro_rate == 0.8
     assert virus.mortality_rate == 0.3
+
+def test_virus_instantiation_2():
+    virus = Virus("E. Coli", 0.15, 0.04)
+    assert virus.name == "E. Coli"
+    assert virus.repro_rate == 0.15
+    assert virus.mortality_rate == 0.04
+
+def test_virus_instantiation_3():
+    virus = Virus("Anthrax", 0.65, 0.2)
+    assert virus.name == "Anthrax"
+    assert virus.repro_rate == 0.65
+    assert virus.mortality_rate == 0.2
