@@ -1,5 +1,5 @@
 import random, sys
-random.seed(42)
+# random.seed(42)
 from person import Person
 from logger import Logger
 from virus import Virus
@@ -8,7 +8,6 @@ from virus import Virus
 class Simulation(object):
     ''' Main class that will run the herd immunity simulation program.
     Expects initialization parameters passed as command line arguments when file is run.
-
     Simulates the spread of a virus through a given population.  The percentage of the
     population that are vaccinated, the size of the population, and the amount of initially
     infected people in a population are all variables that can be set when the program is run.
@@ -25,7 +24,6 @@ class Simulation(object):
         simulation began, including the currently infected people who died.
         You will also need to keep track of the number of people that have die as a result
         of the infection.
-
         All arguments will be passed as command-line arguments when the file is run.
         HINT: Look in the if __name__ == "__main__" function at the bottom.
         '''
@@ -56,10 +54,8 @@ class Simulation(object):
             Args:
                 initial_infected (int): The number of infected people that the simulation
                 will begin with.
-
             Returns:
                 list: A list of Person objects.
-
         '''
         pop_created = []
         # TODO: Finish this method!  This method should be called when the simulation
@@ -97,7 +93,6 @@ class Simulation(object):
     def _simulation_should_continue(self):
         ''' The simulation should only end if the entire population is dead
         or everyone is vaccinated.
-
             Returns:
                 bool: True for simulation should continue, False if it should end.
         '''
@@ -105,10 +100,15 @@ class Simulation(object):
         count_alive = 0
         count_vaccinated = 0
 
+        count_dead = 0
+
         for person in self.population:
             # print(person.is_alive)
             if person.is_alive == True:
                 count_alive += 1
+
+            if person.is_alive == False:
+                count_dead += 1
 
             if person.is_vaccinated == True:
                 count_vaccinated += 1
@@ -118,11 +118,14 @@ class Simulation(object):
             print("All dead")
             return False
         elif count_alive == count_vaccinated:
+            print(f"Number that died: {count_dead}")
             print("All alive and vacinated")
             return False
         else:
             print("Working")
+            print(f"Number that died: {count_dead}")
             return True
+
 
 
     def run(self):
@@ -147,13 +150,17 @@ class Simulation(object):
             time_step_counter += 1
             should_continue = self._simulation_should_continue()
 
-        print(f'The simulation has ended after {time_step_counter} turns.')
+        count_alive = 0
+        for person in self.population:
+            if person.is_alive == True:
+                count_alive += 1
+        print(f'The simulation has ended after {time_step_counter} turns. {count_alive} are alive out of the original {self.pop_size}.')
+
 
 
     def time_step(self):
         ''' This method should contain all the logic for computing one time step
         in the simulation.
-
         This includes:
             1. 100 total interactions with a randon person for each infected person
                 in the population
@@ -186,7 +193,6 @@ class Simulation(object):
     def interaction(self, person, random_person):
         '''This method should be called any time two living people are selected for an
         interaction. It assumes that only living people are passed in as parameters.
-
         Args:
             person1 (person): The initial infected person
             random_person (person): The person that person1 interacts with.
