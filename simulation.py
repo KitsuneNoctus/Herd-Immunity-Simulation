@@ -118,8 +118,9 @@ class Simulation(object):
             print("All dead")
             return False
         elif count_alive == count_vaccinated:
+            print("Ending")
             print(f"Number that died: {count_dead}")
-            print("All alive and vacinated")
+            print("Survivors alive and vacinated")
             return False
         else:
             print("Working")
