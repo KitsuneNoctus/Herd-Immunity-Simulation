@@ -28,3 +28,9 @@ def test_log_infection_survival():
     person = Person(5, True, None)
 
     log.log_infection_survival(person, True)
+
+def test_time_step():
+    file_name = 'log.txt'
+    log = Logger(file_name)
+
+    log.log_time_step(5)

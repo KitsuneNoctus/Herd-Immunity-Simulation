@@ -29,15 +29,28 @@ def test_simulation_should_continue():
     virus = Virus("Small Cough",0.1,0.3)
     subject_1 = Person(0,False,None)
     subject_1.is_alive = False
-    subject_2 = Person(1,False,None)
+    subject_2 = Person(1,True,None)
     subject_2.is_alive = True
-    subject_3 = Person(2,False,None)
-    subject_3.is_alive = False
+    subject_3 = Person(2,True,None)
+    subject_3.is_alive = True
 
     test = Simulation(3,0,virus,0)
     test.population.append(subject_1)
     test.population.append(subject_2)
     test.population.append(subject_3)
     some_survive = test._simulation_should_continue()
-    assert some_survive == True
+    assert some_survive == False
+
+def test_who_dies():
+    virus = Virus("Rabies",0.1,1)
+    subject_1 = Person(0,False,virus)
+    test = Simulation(1,0,virus,1)
+    test.population.append(subject_1)
+    test._who_dies()
+    assert subject_1.is_alive == False
+
+def test_simulation():
+    virus = Virus("Ebola", 0.3, 0.4)
+    sim = Simulation(50, 0.7, virus, 5)
+    # assert sim.run() == 'The simulation has ended after 5 turns.'
     pass

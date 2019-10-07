@@ -1,2 +1,3 @@
 Population Size: 1500  Vaccination Percentage: 25  Virus Name: Ebola  Mortality Rate: 0.5  Basic Reproduction Number: 2 /nInteraction Logs: 
-3 infects 1 /nInfection Survival: /n5 did not survive
+3 infects 1 /nInfection Survival: /n5 died from infection
+Time Steps: Time step 5 ended, beginning 6

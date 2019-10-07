@@ -2,6 +2,7 @@ from person import Person
 
 
 
+
 class Logger(object):
     ''' Utility class responsible for logging all interactions during the simulation. '''
 
@@ -19,7 +20,7 @@ class Logger(object):
         '''
 
         with open(self.file_name, mode = 'w') as file:
-            metadata = f'Population Size: {pop_size}  Vaccination Percentage: {vacc_percentage}  Virus Name: {virus_name}  Mortality Rate: {mortality_rate}  Basic Reproduction Number: {basic_repro_num} /n'
+            metadata = f'Population Size: {pop_size}  Vaccination Percentage: {vacc_percentage}  Virus Name: {virus_name}  Mortality Rate: {mortality_rate}  Basic Reproduction Number: {basic_repro_num}\n'
             file.write(metadata)
 
     def log_interaction(self, person, random_person, random_person_sick=None,
@@ -38,16 +39,16 @@ class Logger(object):
             file.write('Interaction Logs: \n')
 
             if did_infect:
-                status = f'{person._id} infects {random_person._id} /n'
+                status = f'{person._id} infects {random_person._id}\n'
                 file.write(status)
 
             elif person.is_vaccinated:
-                status = f'{person._id} did not infect {random_person._id} /n'
-                f.write(status)
+                status = f'{person._id} did not infect {random_person._id}\n'
+                file.write(status)
 
             else:
                 status = f'{person._id} did not infect {random_person._id} because {random_person._id} is already sick or vaccinated'
-                f.write(status)
+                file.write(status)
 
 
 
@@ -60,14 +61,14 @@ class Logger(object):
         '''
 
         with open(self.file_name, mode = 'a') as file:
-            file.write('Infection Survival: /n')
+            file.write('Infection Survival:\n')
 
             if did_die_from_infection:
-                status = f'{person._id} did not survive'
+                status = f'{person._id} died from infection\n'
                 file.write(status)
 
             else:
-                status = f'{person._id} survived from infection.'
+                status = f'{person._id} survived infection.\n'
                 file.write(status)
 
     def log_time_step(self, time_step_number):
@@ -85,11 +86,9 @@ class Logger(object):
         The format of this log should be:
             "Time step {time_step_number} ended, beginning {time_step_number + 1}\n"
         '''
-        # TODO: Finish this method. This method should log when a time step ends, and a
-        # new one begins.
-        # NOTE: Here is an opportunity for a stretch challenge!
+
         with open(self.file_name, mode = 'a') as file:
 
             file.write('Time Steps: ')
-            status = f'End of {time_step_number} --- Begin {time_step_number + 1} /n'
-            file.write(status) 
+            status = f'Time step {time_step_number} ended, beginning {time_step_number + 1}\n'
+            file.write(status)
