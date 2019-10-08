@@ -117,8 +117,8 @@ For this project to be considered complete, you need to add your repo link to th
 
 **Your repo should contain:**
   * Completed classes for `logger.py`, `simulation.py`, and `person.py`. +
-  * The addition of at least 2 additional tests to the `virus.py` file.
-  * The addition of at least 3 additional tests to the `person.py` file.
+  * The addition of at least 2 additional tests to the `virus.py` file. +
+  * The addition of at least 3 additional tests to the `person.py` file. +
   * At least 1 log file generated from running your simulation. +
   * `simulation_test.py` file should be created that allows for testing the simulation. +
   * `logger_test.py` file should be created that allows for the testing of the logger class. +

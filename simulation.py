@@ -256,7 +256,7 @@ class Simulation(object):
 
 
 if __name__ == "__main__":
-    # python3 simulation.py ebola .8 .2 100000 .5
+    # python3 simulation.py anthrax .65 .2 10000 .6
     params = sys.argv[1:]
 
     virus_name = str(params[0])
