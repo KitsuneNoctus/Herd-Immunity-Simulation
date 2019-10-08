@@ -44,6 +44,8 @@ class Simulation(object):
         self.initial_infected = initial_infected # Int
         self.total_infected = 0 # Int
         self.current_infected = 0 # Int
+        self.num_infected_this_time = 0
+        self.saved_by_vaccination = 0
         self.vacc_percentage = vacc_percentage # float between 0 and 1
         self.total_dead = 0 # Int
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(virus.name, pop_size, vacc_percentage, initial_infected)
@@ -100,6 +102,8 @@ class Simulation(object):
         count_alive = 0
         count_vaccinated = 0
 
+        count_infected = 0
+
         count_dead = 0
 
         for person in self.population:
@@ -125,6 +129,8 @@ class Simulation(object):
         else:
             print("Working")
             print(f"Number that died: {count_dead}")
+            print(f"Number infected this time: {self.num_infected_this_time}")
+            self.num_infected_this_time = 0
             return True
 
 
@@ -140,6 +146,7 @@ class Simulation(object):
         # TODO: Keep track of the number of time steps that have passed.
         # HINT: You may want to call the logger's log_time_step() method at the end of each time step.
         # TODO: Set this variable using a helper
+        self.logger.write_metadata(self.pop_size, self.vacc_percentage, self.virus.name, self.virus.mortality_rate,self.virus.repro_rate)
         self.population = self._create_population(self.initial_infected)
         time_step_counter = 0
         should_continue = self._simulation_should_continue()
@@ -156,6 +163,7 @@ class Simulation(object):
             if person.is_alive == True:
                 count_alive += 1
         print(f'The simulation has ended after {time_step_counter} turns. {count_alive} are alive out of the original {self.pop_size}.')
+        print(f'{self.saved_by_vaccination} are the total number interactions in which people were saved by their vaccinations.')
 
 
 
@@ -221,6 +229,9 @@ class Simulation(object):
             if rand_infect < self.virus.repro_rate:
                 self.newly_infected.append(random_person._id)
                 did_infect = True
+        elif random_person.is_vaccinated == True:
+            self.saved_by_vaccination += 1
+
 
 
         self.logger.log_interaction(person, random_person, None, None, did_infect)
@@ -235,6 +246,7 @@ class Simulation(object):
         # TODO: Once you have iterated through the entire list of self.newly_infected, remember
         # to reset self.newly_infected back to an empty list.
         for person_id in self.newly_infected:
+            self.num_infected_this_time += 1
             for person in self.population:
                 if person_id == person._id:
                     person.infection = self.virus
@@ -252,6 +264,8 @@ class Simulation(object):
                     person.infection = None
                     person.is_alive = False
                     self.total_dead += 1
+
+            self.logger.log_infection_survival(person, person.is_alive)
         pass
 
 

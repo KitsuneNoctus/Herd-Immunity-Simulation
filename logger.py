@@ -63,7 +63,7 @@ class Logger(object):
         with open(self.file_name, mode = 'a') as file:
             file.write('Infection Survival:\n')
 
-            if did_die_from_infection:
+            if did_die_from_infection == False:
                 status = f'{person._id} died from infection\n'
                 file.write(status)
 
