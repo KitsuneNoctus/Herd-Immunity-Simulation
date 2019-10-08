@@ -224,7 +224,7 @@ class Simulation(object):
             #     attribute can be changed to True at the end of the time step.
         # TODO: Call s logger method during this method.
         did_infect = False
-        if random_person.is_vaccinated == False and random_person.infection == None and random_person.is_alive == True:
+        if random_person.is_vaccinated == False and random_person.infection == None and random_person.is_alive == True and random_person._id not in self.newly_infected:
             rand_infect = random.uniform(0,1)
             if rand_infect < self.virus.repro_rate:
                 self.newly_infected.append(random_person._id)
