@@ -9,7 +9,9 @@
 - Answer
 
 3. What percentage of the population died from the virus?
-- Answer
+- 9241 are alive out of the original 10000.
+- 92.41% Left alive
+- 7.59% are dead
 
 4. Out of all interactions sick individuals had during the entire simulation, how many total interactions did we see where a
 vaccination saved a person from potentially becoming infected?
