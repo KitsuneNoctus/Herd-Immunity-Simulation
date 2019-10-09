@@ -41,6 +41,45 @@ def test_simulation_should_continue():
     some_survive = test._simulation_should_continue()
     assert some_survive == False
 
+# def test_run():
+#     virus = Virus("Ebola", 0.3, 0.4)
+#     sim = Simulation(50, 0.7, virus, 5)
+#     assert sim.run() == "The simulation has ended after 2 turns. 46 are alive out of the original 50. 1161 are the total number interactions in which people were saved by their vaccinations."
+#
+#     # assert sim.run() == 'The simulation has ended after 5 turns.'
+#     pass
+
+def time_step():
+    virus = Virus("Test", 1, 0.4)
+    infected = Person(0,False,virus)
+    unvaccinated_person = Person(1,False,None)
+    test = Simulation(2,0,virus,1)
+    pass
+
+def test_interaction():
+    virus = Virus("Test", 1, 0.4)
+    infected = Person(0,False,virus)
+    unvaccinated_person = Person(1,False,None)
+    test = Simulation(2,0,virus,1)
+    test.population.append(infected)
+    test.population.append(unvaccinated_person)
+    test.interaction(infected,unvaccinated_person)
+    test._infect_newly_infected()
+    assert unvaccinated_person.infection == virus
+    pass
+
+def test_infect_newly_infected():
+    virus = Virus("Test", 1, 0.4)
+    person1 = Person(0,False,None)
+    person2 = Person(1,False,None)
+    test = Simulation(2,0,virus,1)
+    test.population.append(person1)
+    test.population.append(person2)
+    test.newly_infected.append(0)
+    test._infect_newly_infected()
+    assert person1.infection == virus
+    pass
+
 def test_who_dies():
     virus = Virus("Rabies",0.1,1)
     subject_1 = Person(0,False,virus)
@@ -48,9 +87,3 @@ def test_who_dies():
     test.population.append(subject_1)
     test._who_dies()
     assert subject_1.is_alive == False
-
-def test_simulation():
-    virus = Virus("Ebola", 0.3, 0.4)
-    sim = Simulation(50, 0.7, virus, 5)
-    # assert sim.run() == 'The simulation has ended after 5 turns.'
-    pass
